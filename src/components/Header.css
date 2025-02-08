@@ -1,0 +1,19 @@
+.header-container{
+    display: flex;
+    place-items: center;
+    background-color: #ffffff;
+    gap: 1rem;
+    width: 550px;
+    padding: 10px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.10), 0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+    justify-content: center;
+}
+
+.header-container img{
+    height: 50px;
+}
+.header-container span{
+    color: rgb(41, 41, 41);
+    font-weight: 600;
+    font-size: 24px;
+}
