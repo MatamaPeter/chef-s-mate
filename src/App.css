@@ -1,7 +1,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
   background-color: #fff;
   border-radius: 10px;
 }
@@ -23,7 +22,8 @@
   border: none;
   padding: 8px 15px;
   border-radius: 8px;
-  width: 250px
+  width: 250px;
+  color:#000
 }
 
 .form .submit-btn{
@@ -33,4 +33,7 @@
   padding: 8px 15px;
   width: 150px;
   cursor: pointer;
+}
+.ingredient-list{
+  margin-left: 70px;
 }
