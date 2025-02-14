@@ -1,32 +1,20 @@
-export default function State() {
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 
-    function signup(formData) {
-        
-        const email = formData.get('email')
-        console.log(email);
-        
-        
-    }
-    
+export default function State() {
+    const [unreadMessages, setUnreadMessages] = useState([])
     return (
-        <section>
-            <h1>Signup Form</h1>
-            <form action={signup}>
-                <label>Email:
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="e.g. John@gmail.com"
-                    />
-                </label><br />
-                 <label>Password:
-                    <input
-                        type="password"
-                        name="password"
-                    />
-                </label>
-                <button>Submit</button>
-            </form>
-        </section>
+        <div>
+            
+            {   
+                unreadMessages.length > 0 &&
+                <h5>You have {unreadMessages.length} Message(s)!</h5>
+            }
+            {
+                unreadMessages.length == 0 &&
+                <h5>You are all caught up!</h5>
+            }
+            
+        </div>
     )
 }
