@@ -4,6 +4,8 @@ import Form from "./components/Form"
 import { useState } from "react";
 import Recipe from "./components/Recipe"
 import Ingredients from "./components/Ingredients";
+import { getRecipeFromMistral } from "./assets/ai";
+
 
 export default function App() {
 
@@ -20,8 +22,10 @@ export default function App() {
         
     }  
 
-    function toggleRecipe() {
-        setRecipeShown(prevRecipe => !prevRecipe)   
+    async function getRecipe() {
+      const recipeMarkdown = await getRecipeFromMistral(ingredients)   
+      console.log(recipeMarkdown);
+      
     }
  
   return (
@@ -29,7 +33,7 @@ export default function App() {
       <div className="components">
         <Header />
         <Form submit={handleSubmit} />
-        <Ingredients toggle={ toggleRecipe } list={ ingredientsList } />
+        <Ingredients getRecipe={ getRecipe } list={ ingredientsList } />
         <Recipe shown={recipeShown}/>
       </div>
       
