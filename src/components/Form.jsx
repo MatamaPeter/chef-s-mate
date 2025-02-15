@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types*/
 export default function Form(props) {
+
     
     return (
         <div>          
@@ -8,7 +9,7 @@ export default function Form(props) {
                     type="text"
                     className="input-field" 
                     aria-label="Add ingredient"
-                    placeholder="e.g. oregano"
+                    placeholder="e.g. Tomatoes"
                     name='ingredient'
                 />
                 <button>+ Add ingredient</button>  
