@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import './App.css';
 import Form from "./components/Form";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Recipe from "./components/Recipe";
 import Ingredients from "./components/Ingredients";
 import { getRecipeFromMistral } from "./assets/ai";
@@ -10,7 +10,8 @@ export default function App() {
   const [ingredients, setIngredients] = useState([]);
   const [recipe, setRecipe] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // ✅ Track loading state
+  const [loading, setLoading] = useState(false); 
+  const recipeSection = useRef(null)
 
   const ingredientsList = ingredients.map((ingredient) => (
     <li key={ingredient}>{ingredient}</li>
@@ -32,6 +33,12 @@ export default function App() {
     setError("");
   }
 
+  useEffect(() => {
+    if (recipe !== "" && recipeSection.current !== null) {
+      recipeSection.current.scrollIntoView({behavior:"smooth"})
+    }
+  },[recipe])
+  
   async function getRecipe() {
     if (ingredients.length === 0) {
       setError("Please add at least one ingredient before generating a recipe!");
@@ -49,6 +56,7 @@ export default function App() {
       setRecipe("Error fetching recipe. Please try again.");
     } finally {
       setLoading(false); 
+      
     }
   }
 
@@ -59,7 +67,7 @@ export default function App() {
         <Form submit={handleSubmit} />
         {error && <p className="error"><span>x</span> {error}</p>}
 
-        <Ingredients getRecipe={getRecipe} list={ingredientsList} />
+        <Ingredients ref={recipeSection}  getRecipe={getRecipe} list={ingredientsList} />
 
         {}
         {loading ? (
