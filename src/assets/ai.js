@@ -1,4 +1,4 @@
-import { HfInference } from "@huggingface/inference";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const SYSTEM_PROMPT = `
 You are an assistant that receives a list of ingredients that a user has and suggests a recipe
@@ -10,54 +10,58 @@ easier to render to a web page.
 If the user specifies cuisine preferences, meal type, or dietary restrictions, make sure to incorporate those into your recipe recommendation.
 `;
 
-const HF_ACCESS_TOKEN = import.meta.env.VITE_HF_ACCESS_TOKEN;
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-if (!HF_ACCESS_TOKEN) {
-    throw new Error("Missing Hugging Face API Key! Please set HF_ACCESS_TOKEN.");
+if (!GEMINI_API_KEY) {
+  throw new Error("Missing Gemini API Key! Please set VITE_GEMINI_API_KEY.");
 }
 
-const hf = new HfInference(HF_ACCESS_TOKEN);
+const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
-export async function getRecipeFromMistral(ingredientsArr, preferences = {}) {
-    const ingredientsString = ingredientsArr.join(", ");
+export async function getRecipeFromGemini(ingredientsArr, preferences = {}) {
+  const ingredientsString = ingredientsArr.join(", ");
+
+  let userPrompt = `I have these ingredients: ${ingredientsString}.`;
+
+  if (preferences.cuisine) {
+    userPrompt += ` I prefer ${preferences.cuisine} cuisine.`;
+  }
+
+  if (preferences.mealType) {
+    userPrompt += ` I want a ${preferences.mealType.toLowerCase()} recipe.`;
+  }
+
+  if (preferences.dietaryRestrictions) {
+    userPrompt += ` Dietary restrictions: ${preferences.dietaryRestrictions}.`;
+  }
+
+  userPrompt += " Suggest a recipe I could make with these.";
+
+  try {
+    // Use the correct model name (current as of June 2024)
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-pro-latest",
+      systemInstruction: SYSTEM_PROMPT
+    });
     
-    // Build a prompt that includes any preferences
-    let userPrompt = `I have ${ingredientsString}.`;
+    // Simple prompt format that works with current SDK
+    const result = await model.generateContent(userPrompt);
     
-    // Add cuisine preference if specified
-    if (preferences.cuisine) {
-        userPrompt += ` I would like to make ${preferences.cuisine} cuisine.`;
-    }
+    const response = await result.response;
+    return response.text();
+  } catch (err) {
+    console.error("Gemini API Error:", err);
     
-    // Add meal type preference if specified
-    if (preferences.mealType) {
-        userPrompt += ` I'm looking for a ${preferences.mealType.toLowerCase()} recipe.`;
-    }
-    
-    // Add dietary restrictions if specified
-    if (preferences.dietaryRestrictions) {
-        userPrompt += ` I have the following dietary restrictions: ${preferences.dietaryRestrictions}.`;
-    }
-    
-    userPrompt += " Please give me a recipe you'd recommend I make!";
-    
+    // Fallback to alternative model if primary fails
     try {
-        const response = await hf.chatCompletion({
-            model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
-            messages: [
-                { role: "system", content: SYSTEM_PROMPT },
-                { role: "user", content: userPrompt },
-            ],
-            max_tokens: 1024,
-        });
-
-        if (!response || !response.choices || response.choices.length === 0) {
-            throw new Error("Invalid API response");
-        }
-
-        return response.choices[0].message.content;
-    } catch (err) {
-        console.error("Hugging Face API Error:", err);
-        return `Error: ${err.message || "Unable to generate a recipe at this time."}`;
+      const fallbackModel = genAI.getGenerativeModel({ 
+        model: "gemini-1.0-pro",
+        systemInstruction: SYSTEM_PROMPT
+      });
+      const result = await fallbackModel.generateContent(userPrompt);
+      return (await result.response).text();
+    } catch (fallbackErr) {
+      return `Error: ${fallbackErr.message || "Unable to generate recipe. Please try different ingredients."}`;
     }
+  }
 }

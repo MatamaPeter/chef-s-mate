@@ -3,7 +3,7 @@ import Form from "./components/Form";
 import { useEffect, useRef, useState } from "react";
 import Recipe from "./components/Recipe";
 import Ingredients from "./components/Ingredients";
-import { getRecipeFromMistral } from "./assets/ai";
+import { getRecipeFromGemini } from "./assets/ai";
 import { cuisineOptions, mealTypes } from "./assets/options";
 import { FiTrash2, FiSettings, FiX, FiChevronUp } from 'react-icons/fi';
 import { motion, AnimatePresence } from "framer-motion";
@@ -104,7 +104,7 @@ export default function App() {
         dietaryRestrictions: dietaryRestrictions.trim() || null
       };
       
-      const recipeMarkdown = await getRecipeFromMistral(ingredients, preferences);
+      const recipeMarkdown = await getRecipeFromGemini(ingredients, preferences);
       setRecipe(recipeMarkdown);
       
     
