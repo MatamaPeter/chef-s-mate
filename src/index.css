@@ -1,113 +1,146 @@
-@import "tailwindcss";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@layer base {
+  html {
+    @apply font-inter;
+    scroll-behavior: smooth;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-playfair;
+  }
+}
 
 @layer components {
 
-  /* Prose styles for light mode */
-  .prose h1 {
-    @apply text-2xl font-bold text-gray-900 my-4;
+  /* Enhanced Prose Styles */
+  .prose {
+    @apply max-w-none;
+
+    h1 {
+      @apply text-3xl font-bold text-gray-900 my-6;
+      line-height: 1.3;
+    }
+
+    h2 {
+      @apply text-2xl font-bold text-gray-800 my-5;
+      line-height: 1.35;
+    }
+
+    h3 {
+      @apply text-xl font-semibold text-gray-800 my-4;
+      line-height: 1.4;
+    }
+
+    p {
+      @apply my-5 text-gray-700 leading-relaxed;
+    }
+
+    ul,
+    ol {
+      @apply my-5 pl-6 space-y-2;
+    }
+
+    ul {
+      @apply list-disc;
+    }
+
+    ol {
+      @apply list-decimal;
+    }
+
+    li {
+      @apply pl-2;
+    }
+
+    strong {
+      @apply font-semibold text-gray-900;
+    }
+
+    em {
+      @apply italic;
+    }
+
+    a {
+      @apply text-amber-600 hover:text-amber-800 transition-colors duration-200 font-medium;
+    }
+
+    blockquote {
+      @apply border-l-4 border-amber-300 pl-5 italic text-gray-600 my-6 bg-amber-50/50 py-3 rounded-r-lg;
+    }
+
+    code {
+      @apply bg-gray-100 rounded px-2 py-1 text-sm font-mono text-gray-800;
+    }
+
+    pre {
+      @apply bg-gray-800 text-gray-100 rounded-lg p-4 overflow-x-auto my-6 text-sm leading-relaxed;
+
+      code {
+        @apply bg-transparent p-0;
+      }
+    }
+
+    img {
+      @apply rounded-lg my-6 shadow-md;
+    }
+
+    hr {
+      @apply my-8 border-t border-gray-200;
+    }
   }
 
-  .prose h2 {
-    @apply text-xl font-bold text-gray-800 my-3;
-  }
+  /* Dark Mode Prose */
+  .prose-invert {
+    h1 {
+      @apply text-gray-100;
+    }
 
-  .prose h3 {
-    @apply text-lg font-bold text-gray-800 my-2;
-  }
+    h2,
+    h3 {
+      @apply text-gray-200;
+    }
 
-  .prose p {
-    @apply my-4 text-gray-700;
-  }
+    p {
+      @apply text-gray-300;
+    }
 
-  .prose ul {
-    @apply list-disc list-inside my-4 pl-4;
-  }
+    ul,
+    ol {
+      @apply text-gray-300;
+    }
 
-  .prose ol {
-    @apply list-decimal list-inside my-4 pl-4;
-  }
+    strong {
+      @apply text-gray-100;
+    }
 
-  .prose li {
-    @apply mb-1;
-  }
+    a {
+      @apply text-amber-400 hover:text-amber-300;
+    }
 
-  .prose strong {
-    @apply font-bold;
-  }
+    blockquote {
+      @apply border-amber-400 text-gray-300 bg-gray-700/50;
+    }
 
-  .prose em {
-    @apply italic;
-  }
+    code {
+      @apply bg-gray-700 text-gray-200;
+    }
 
-  .prose a {
-    @apply text-amber-600 hover:text-amber-800 transition-colors;
-  }
+    pre {
+      @apply bg-gray-800/80;
+    }
 
-  .prose blockquote {
-    @apply border-l-4 border-amber-200 pl-4 italic text-gray-600 my-4;
-  }
-
-  .prose code {
-    @apply bg-gray-100 rounded px-1 py-0.5 text-sm;
-  }
-
-  .prose pre {
-    @apply bg-gray-800 text-white rounded-lg p-4 overflow-x-auto my-4;
-  }
-
-  /* Dark mode prose styles */
-  .prose-invert h1 {
-    @apply text-2xl font-bold text-gray-100 my-4;
-  }
-
-  .prose-invert h2 {
-    @apply text-xl font-bold text-gray-200 my-3;
-  }
-
-  .prose-invert h3 {
-    @apply text-lg font-bold text-gray-200 my-2;
-  }
-
-  .prose-invert p {
-    @apply my-4 text-gray-300;
-  }
-
-  .prose-invert ul {
-    @apply list-disc list-inside my-4 pl-4 text-gray-300;
-  }
-
-  .prose-invert ol {
-    @apply list-decimal list-inside my-4 pl-4 text-gray-300;
-  }
-
-  .prose-invert li {
-    @apply mb-1;
-  }
-
-  .prose-invert strong {
-    @apply font-bold text-gray-200;
-  }
-
-  .prose-invert em {
-    @apply italic text-gray-300;
-  }
-
-  .prose-invert a {
-    @apply text-amber-400 hover:text-amber-300 transition-colors;
-  }
-
-  .prose-invert blockquote {
-    @apply border-l-4 border-amber-500 pl-4 italic text-gray-400 my-4;
-  }
-
-  .prose-invert code {
-    @apply bg-gray-700 text-gray-200 rounded px-1 py-0.5 text-sm;
-  }
-
-  .prose-invert pre {
-    @apply bg-gray-700 text-gray-200 rounded-lg p-4 overflow-x-auto my-4;
+    hr {
+      @apply border-gray-700;
+    }
   }
 
   /* Animations */
@@ -123,111 +156,185 @@
     }
   }
 
-  .animate-fade-in {
-    animation: fade-in 0.3s ease-out forwards;
-  }
-
   @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-
     to {
       transform: rotate(360deg);
     }
   }
 
-  @keyframes spin-reverse {
-    from {
-      transform: rotate(360deg);
+  @keyframes pulse {
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @keyframes bounce {
+
+    0%,
+    100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
     }
 
-    to {
-      transform: rotate(0deg);
+    50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
     }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .animate-spin {
     animation: spin 1.5s linear infinite;
   }
 
-  .animate-spin-reverse {
-    animation: spin-reverse 1.2s linear infinite;
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
-  /* Transform */
-  .transform {
-    transform-origin: center;
+  .animate-bounce {
+    animation: bounce 1s infinite;
   }
 
-  .hover\:scale-102:hover {
-    transform: scale(1.02);
+  /* Glass Morphism Effect */
+  .glass {
+    @apply bg-white/20 backdrop-blur-md border border-white/10;
+
+    &.dark {
+      @apply bg-gray-800/30 border-gray-700/30;
+    }
   }
 
-  .hover\:scale-110:hover {
-    transform: scale(1.1);
+  /* Enhanced Shadows */
+  .shadow-soft {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   }
 
-  /* Enhanced shadows */
-  .shadow-sm {
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  .shadow-hard {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   }
 
-  .shadow-md {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  .shadow-accent {
+    box-shadow: 0 4px 24px rgba(245, 158, 11, 0.15);
   }
 
-  .shadow-lg {
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  /* Custom Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.amber.400') theme('colors.gray.100');
+
+    &::-webkit-scrollbar {
+      @apply w-2 h-2;
+    }
+
+    &::-webkit-scrollbar-track {
+      @apply bg-gray-100;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply bg-amber-400 rounded-full;
+    }
   }
 
-  .shadow-xl {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  .dark .scrollbar-thin {
+    scrollbar-color: theme('colors.amber.500') theme('colors.gray.800');
+
+    &::-webkit-scrollbar-track {
+      @apply bg-gray-800;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply bg-amber-500;
+    }
   }
 
-  .hover\:shadow-md:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, theme('colors.amber.500'), theme('colors.orange.500'));
   }
 
-  /* Custom scrollbar - light mode */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+  /* Custom Buttons */
+  .btn-primary {
+    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300;
+    @apply bg-gradient-to-r from-amber-500 to-orange-500 text-white;
+    @apply hover:from-amber-600 hover:to-orange-600 hover:shadow-lg;
+    @apply focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2;
   }
 
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  .btn-secondary {
+    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300;
+    @apply bg-white text-gray-800 border border-gray-200;
+    @apply hover:bg-gray-50 hover:shadow-md;
+    @apply dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background: #d1d1d1;
-    border-radius: 3px;
+  /* Custom Inputs */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all;
+    @apply dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #a1a1a1;
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-2xl shadow-md overflow-hidden transition-all hover:shadow-lg;
+    @apply dark:bg-gray-800 dark:border dark:border-gray-700;
+  }
+}
+
+@layer utilities {
+
+  /* Text Balance */
+  .text-balance {
+    text-wrap: balance;
   }
 
-  /* Custom scrollbar - dark mode */
-  .dark ::-webkit-scrollbar-track {
-    background: #2d3748;
+  /* Perspective */
+  .perspective {
+    perspective: 1000px;
   }
 
-  .dark ::-webkit-scrollbar-thumb {
-    background: #4a5568;
-    border-radius: 3px;
+  /* Preserve 3D */
+  .preserve-3d {
+    transform-style: preserve-3d;
   }
 
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background: #718096;
+  /* Backface Visibility */
+  .backface-hidden {
+    backface-visibility: hidden;
   }
 
-  /* Fixes for utility classes used in the app */
-  .drop-shadow {
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  /* Smooth transitions */
+  .transition-slow {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .drop-shadow-xl {
-    filter: drop-shadow(0 20px 13px rgba(0, 0, 0, 0.03)) drop-shadow(0 8px 5px rgba(0, 0, 0, 0.08));
+  .transition-medium {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .transition-fast {
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Will-change */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  /* Clip path */
+  .clip-circle {
+    clip-path: circle(50% at 50% 50%);
+  }
+
+  /* Gradient masks */
+  .mask-gradient-t {
+    mask-image: linear-gradient(to top, transparent, black);
+  }
+
+  .mask-gradient-b {
+    mask-image: linear-gradient(to bottom, transparent, black);
   }
 }
