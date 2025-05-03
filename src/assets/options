@@ -1,0 +1,37 @@
+// Cuisine options for the recipe generator
+export const cuisineOptions = [
+  "Any",
+  "American",
+  "Italian",
+  "Mexican",
+  "Chinese",
+  "Japanese",
+  "Indian",
+  "Thai",
+  "Mediterranean",
+  "French",
+  "Spanish",
+  "Greek",
+  "Middle Eastern",
+  "Vietnamese",
+  "Korean",
+  "Caribbean",
+  "African"
+];
+
+// Meal type options for the recipe generator
+export const mealTypes = [
+  "Any",
+  "Breakfast",
+  "Lunch",
+  "Dinner",
+  "Appetizer",
+  "Snack",
+  "Dessert",
+  "Drink",
+  "Side Dish",
+  "Soup",
+  "Salad",
+  "Sandwich",
+  "Main Course"
+];
