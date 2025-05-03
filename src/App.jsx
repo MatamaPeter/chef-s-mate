@@ -290,7 +290,7 @@ export default function App() {
         </motion.div>
 
         <AnimatePresence>
-          {ingredients.length > 0 && (
+          {ingredients.length > 0 && !recipe && !loading &&(
             <motion.div 
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
