@@ -1,4 +1,4 @@
-```css
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -340,4 +340,3 @@
     mask-image: linear-gradient(to bottom, transparent, black);
   }
 }
-```
