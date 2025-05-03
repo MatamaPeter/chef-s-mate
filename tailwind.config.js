@@ -1,12 +1,13 @@
 // tailwind.config.js
-import colors from 'tailwindcss/colors'
-
 export default {
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
   theme: {
     extend: {
-      colors: {
-        amber: colors.amber, // ✅ Add this line
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'],
+        'playfair': ['"Playfair Display"', 'serif'],
       },
     },
   },
+  plugins: [],
 }
