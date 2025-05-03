@@ -337,4 +337,5 @@
   .mask-gradient-b {
     mask-image: linear-gradient(to bottom, transparent, black);
   }
+  
 }
