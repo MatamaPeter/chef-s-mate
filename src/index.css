@@ -1,19 +1,22 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Your custom styles go below if any */
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 @layer base {
   html {
-   
+    @apply font-inter;
     scroll-behavior: smooth;
   }
 
- 
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-playfair;
+  }
 }
 
 @layer components {
@@ -71,8 +74,7 @@
     }
 
     blockquote {
-      @apply border-l-4 pl-5 italic text-gray-600 my-6 bg-amber-50/50 py-3 rounded-r-lg;
-      border-color: #fcd34d; /* amber-300 */
+      @apply border-l-4 border-amber-300 pl-5 italic text-gray-600 my-6 bg-amber-50/50 py-3 rounded-r-lg;
     }
 
     code {
@@ -107,7 +109,10 @@
       @apply text-gray-200;
     }
 
-    p,
+    p {
+      @apply text-gray-300;
+    }
+
     ul,
     ol {
       @apply text-gray-300;
@@ -122,8 +127,7 @@
     }
 
     blockquote {
-      @apply text-gray-300 bg-gray-700/50;
-      border-color: #fbbf24; /* amber-400 */
+      @apply border-amber-400 text-gray-300 bg-gray-700/50;
     }
 
     code {
@@ -213,13 +217,13 @@
   }
 
   .shadow-accent {
-    box-shadow: 0 4px 24px rgba(245, 158, 11, 0.15); /* amber-500 */
+    box-shadow: 0 4px 24px rgba(245, 158, 11, 0.15);
   }
 
   /* Custom Scrollbar */
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: #fbbf24 #f3f4f6; /* amber-400 on gray-100 */
+    scrollbar-color: theme('colors.amber.400') theme('colors.gray.100');
 
     &::-webkit-scrollbar {
       @apply w-2 h-2;
@@ -235,7 +239,7 @@
   }
 
   .dark .scrollbar-thin {
-    scrollbar-color: #f59e0b #1f2937; /* amber-500 on gray-800 */
+    scrollbar-color: theme('colors.amber.500') theme('colors.gray.800');
 
     &::-webkit-scrollbar-track {
       @apply bg-gray-800;
@@ -249,7 +253,7 @@
   /* Gradient Text */
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(to right, #f59e0b, #f97316); /* amber-500 to orange-500 */
+    background-image: linear-gradient(to right, theme('colors.amber.500'), theme('colors.orange.500'));
   }
 
   /* Custom Buttons */
