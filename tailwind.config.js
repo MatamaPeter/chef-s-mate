@@ -1,17 +1,15 @@
-
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
+module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}", // Make sure the paths are correct for your project
+  ],
   theme: {
     extend: {
-      colors: {
-        amber: {
-          400: '#fbbf24',
-          500: '#f59e0b',
-          600: '#d97706'
-        }
-      }
-    }
-  }
- 
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+        playfair: ['Playfair Display', 'serif'],
+      },
+    },
+  },
+  plugins: [],
 }
-

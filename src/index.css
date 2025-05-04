@@ -20,8 +20,6 @@
 }
 
 @layer components {
-
-  /* Enhanced Prose Styles */
   .prose {
     @apply max-w-none;
 
@@ -70,11 +68,19 @@
     }
 
     a {
-      @apply text-amber-600 hover:text-amber-800 transition-colors duration-200 font-medium;
+      @apply transition-colors duration-200 font-medium;
+      color: var(--amber-600);
+    }
+
+    a:hover {
+      color: var(--amber-800);
     }
 
     blockquote {
-      @apply border-l-4 border-amber-300 pl-5 italic text-gray-600 my-6 bg-amber-50/50 py-3 rounded-r-lg;
+      @apply border-l-4 pl-5 italic text-gray-600 my-6 py-3 rounded-r-lg;
+      border-color: var(--amber-300);
+      background-color: rgb(255 251 235 / 0.5);
+      /* amber-50/50 */
     }
 
     code {
@@ -83,10 +89,10 @@
 
     pre {
       @apply bg-gray-800 text-gray-100 rounded-lg p-4 overflow-x-auto my-6 text-sm leading-relaxed;
+    }
 
-      code {
-        @apply bg-transparent p-0;
-      }
+    pre code {
+      @apply bg-transparent p-0;
     }
 
     img {
@@ -98,7 +104,6 @@
     }
   }
 
-  /* Dark Mode Prose */
   .prose-invert {
     h1 {
       @apply text-gray-100;
@@ -109,10 +114,7 @@
       @apply text-gray-200;
     }
 
-    p {
-      @apply text-gray-300;
-    }
-
+    p,
     ul,
     ol {
       @apply text-gray-300;
@@ -123,11 +125,18 @@
     }
 
     a {
-      @apply text-amber-400 hover:text-amber-300;
+      color: var(--amber-400);
+    }
+
+    a:hover {
+      color: var(--amber-300);
     }
 
     blockquote {
-      @apply border-amber-400 text-gray-300 bg-gray-700/50;
+      @apply text-gray-300;
+      border-color: var(--amber-400);
+      background-color: rgb(31 41 55 / 0.5);
+      /* gray-700/50 */
     }
 
     code {
@@ -135,7 +144,8 @@
     }
 
     pre {
-      @apply bg-gray-800/80;
+      background-color: rgb(31 41 55 / 0.8);
+      /* gray-800/80 */
     }
 
     hr {
@@ -143,7 +153,6 @@
     }
   }
 
-  /* Animations */
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -198,16 +207,14 @@
     animation: bounce 1s infinite;
   }
 
-  /* Glass Morphism Effect */
   .glass {
     @apply bg-white/20 backdrop-blur-md border border-white/10;
-
-    &.dark {
-      @apply bg-gray-800/30 border-gray-700/30;
-    }
   }
 
-  /* Enhanced Shadows */
+  .dark .glass {
+    @apply bg-gray-800/30 border-gray-700/30;
+  }
+
   .shadow-soft {
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   }
@@ -220,64 +227,76 @@
     box-shadow: 0 4px 24px rgba(245, 158, 11, 0.15);
   }
 
-  /* Custom Scrollbar */
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: theme('colors.amber.400') theme('colors.gray.100');
+    scrollbar-color: var(--amber-400) var(--gray-100);
+  }
 
-    &::-webkit-scrollbar {
-      @apply w-2 h-2;
-    }
+  .scrollbar-thin::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
 
-    &::-webkit-scrollbar-track {
-      @apply bg-gray-100;
-    }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
 
-    &::-webkit-scrollbar-thumb {
-      @apply bg-amber-400 rounded-full;
-    }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--amber-400);
+    border-radius: 9999px;
   }
 
   .dark .scrollbar-thin {
-    scrollbar-color: theme('colors.amber.500') theme('colors.gray.800');
-
-    &::-webkit-scrollbar-track {
-      @apply bg-gray-800;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      @apply bg-amber-500;
-    }
+    scrollbar-color: var(--amber-500) var(--gray-800);
   }
 
-  /* Gradient Text */
+  .dark .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-800;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--amber-500);
+  }
+
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(to right, theme('colors.amber.500'), theme('colors.orange.500'));
+    background-image: linear-gradient(to right, var(--amber-500), var(--orange-500));
   }
 
-  /* Custom Buttons */
   .btn-primary {
-    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300;
-    @apply bg-gradient-to-r from-amber-500 to-orange-500 text-white;
-    @apply hover:from-amber-600 hover:to-orange-600 hover:shadow-lg;
-    @apply focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2;
+    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300 text-white;
+    background-image: linear-gradient(to right, var(--amber-500), var(--orange-500));
+  }
+
+  .btn-primary:hover {
+    background-image: linear-gradient(to right, var(--amber-600), var(--orange-600));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .btn-primary:focus {
+    @apply outline-none ring-2 ring-amber-400 ring-offset-2;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300;
-    @apply bg-white text-gray-800 border border-gray-200;
-    @apply hover:bg-gray-50 hover:shadow-md;
-    @apply dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600;
+    @apply px-6 py-3 rounded-xl font-medium transition-all duration-300 bg-white text-gray-800 border border-gray-200;
   }
 
-  /* Custom Inputs */
+  .btn-secondary:hover {
+    @apply bg-gray-50 shadow-md;
+  }
+
+  .dark .btn-secondary {
+    @apply bg-gray-700 text-white border-gray-600;
+  }
+
+  .dark .btn-secondary:hover {
+    @apply bg-gray-600;
+  }
+
   .input-field {
     @apply w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all;
     @apply dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400;
   }
 
-  /* Card Styles */
   .card {
     @apply bg-white rounded-2xl shadow-md overflow-hidden transition-all hover:shadow-lg;
     @apply dark:bg-gray-800 dark:border dark:border-gray-700;
@@ -285,28 +304,22 @@
 }
 
 @layer utilities {
-
-  /* Text Balance */
   .text-balance {
     text-wrap: balance;
   }
 
-  /* Perspective */
   .perspective {
     perspective: 1000px;
   }
 
-  /* Preserve 3D */
   .preserve-3d {
     transform-style: preserve-3d;
   }
 
-  /* Backface Visibility */
   .backface-hidden {
     backface-visibility: hidden;
   }
 
-  /* Smooth transitions */
   .transition-slow {
     transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
@@ -319,17 +332,14 @@
     transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Will-change */
   .will-change-transform {
     will-change: transform;
   }
 
-  /* Clip path */
   .clip-circle {
     clip-path: circle(50% at 50% 50%);
   }
 
-  /* Gradient masks */
   .mask-gradient-t {
     mask-image: linear-gradient(to top, transparent, black);
   }
@@ -337,5 +347,4 @@
   .mask-gradient-b {
     mask-image: linear-gradient(to bottom, transparent, black);
   }
-
 }
