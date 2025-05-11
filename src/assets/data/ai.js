@@ -49,30 +49,53 @@ export async function getRecipeFromGemini(ingredientsArr = [], preferences = {})
 
   userPrompt += `What recipe can I make? Format the answer in markdown with a bold title, ingredients list, and numbered steps.`;
 
-  try {
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-pro-latest",
-      systemInstruction: SYSTEM_PROMPT,
-    });
-
-    const result = await model.generateContent(userPrompt);
-    return (await result.response).text();
-
-  } catch (err) {
-    console.warn("⚠️ Gemini 1.5 failed, attempting fallback...", err.message);
-
-    // Optional fallback model
+  // Implementation with retry logic and proper model names
+  const models = [
+    "gemini-1.5-flash", // Start with a model with higher quota limits
+    "gemini-pro",       // Correct name for fallback model
+  ];
+  
+  let lastError = null;
+  
+  for (const modelName of models) {
     try {
-      const fallbackModel = genAI.getGenerativeModel({
-        model: "gemini-1.0-pro",
+      console.log(`Attempting to use ${modelName}...`);
+      
+      const model = genAI.getGenerativeModel({
+        model: modelName,
         systemInstruction: SYSTEM_PROMPT,
       });
 
-      const result = await fallbackModel.generateContent(userPrompt);
-      return (await result.response).text();
-    } catch (fallbackErr) {
-      console.error("❌ Fallback model failed too:", fallbackErr.message);
-      return `**Error:** Unable to generate recipe. Please check your internet connection or try different ingredients.`;
+      // Add exponential backoff retry logic
+      const maxRetries = 3;
+      let retryCount = 0;
+      let retryDelay = 1000; // Start with 1 second
+      
+      while (retryCount < maxRetries) {
+        try {
+          const result = await model.generateContent(userPrompt);
+          return (await result.response).text();
+        } catch (retryErr) {
+          if (retryErr.message.includes("429") && retryCount < maxRetries - 1) {
+            // Rate limit error, retry with backoff
+            console.log(`Rate limit hit, retrying in ${retryDelay/1000} seconds...`);
+            await new Promise(resolve => setTimeout(resolve, retryDelay));
+            retryDelay *= 2; // Exponential backoff
+            retryCount++;
+          } else {
+            // Different error or max retries reached, throw to outer catch
+            throw retryErr;
+          }
+        }
+      }
+    } catch (err) {
+      console.warn(`⚠️ ${modelName} failed: ${err.message}`);
+      lastError = err;
+      // Continue to next model in the array
     }
   }
+
+  // If we get here, all models have failed
+  console.error("❌ All models failed:", lastError?.message);
+  return `**Error:** Unable to generate recipe. The API rate limit has been reached. Please try again in a few minutes or check your Gemini API key configuration.`;
 }
